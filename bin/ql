@@ -4,7 +4,7 @@ import Cocoa
 import QuickLookUI
 
 class PreviewItem : NSObject, QLPreviewItem {
-    let path: String
+    private var path: String!
 
     init(path: String) {
         self.path = path
@@ -47,17 +47,23 @@ class Preview : NSObject, QLPreviewPanelDelegate, QLPreviewPanelDataSource {
 }
 
 class AppDelegate : NSObject, NSApplicationDelegate {
+    private var path: String!
+
+    init(_ path: String) {
+        self.path = path
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.setActivationPolicy(.regular)
         NSApp.activate(ignoringOtherApps: true)
-        view(path: "/Users/pmeinhardt/Code/pmeinhardt/maxdown/README.md")
+        view(path)
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
 
-    func view(path: String) {
+    func view(_ path: String) {
         let item = PreviewItem(path: path)
         let preview = Preview(item: item)
         preview.show()
@@ -66,9 +72,18 @@ class AppDelegate : NSObject, NSApplicationDelegate {
 
 // main
 
+let arguments = CommandLine.arguments
+
+if arguments.count <= 1 {
+    print("usage: ql <path>")
+    exit(1)
+}
+
+let path = arguments[1]
+
 let app = NSApplication.shared
 
-let delegate = AppDelegate()
+let delegate = AppDelegate(path)
 app.delegate = delegate
 
 app.run()
