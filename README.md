@@ -1,4 +1,4 @@
-# ql
+# ql [![checks](https://github.com/pmeinhardt/ql/actions/workflows/checks.yml/badge.svg)](https://github.com/pmeinhardt/ql/actions/workflows/checks.yml)
 
 Preview files from the command-line using macOS Quick Look.
 
