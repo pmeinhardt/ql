@@ -4,14 +4,14 @@ import Cocoa
 import QuickLookUI
 
 class PreviewItem : NSObject, QLPreviewItem {
-    private var path: String!
+    private var url: URL!
 
     init(path: String) {
-        self.path = path
+        self.url = URL(fileURLWithPath: path)
     }
 
     var previewItemURL: URL! {
-        return URL(fileURLWithPath: path)
+        return url
     }
 
     var previewItemTitle: String! {
