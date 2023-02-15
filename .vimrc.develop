@@ -1,0 +1,19 @@
+" For development, you can start `vim` with this init file instead of your
+" default one to test any changes you make to the 'maxdown' vim-plugin:
+"
+"   vim -u .vimrc.develop
+"
+" or:
+"
+"   nvim -u .vimrc.develop
+"
+
+let s:path = expand('<sfile>:p:h')
+execute 'set runtimepath+=' . escape(s:path, '\,')
+
+" These are example mappings for previewing files in Quick Look:
+
+" Start a command prompt allowing you to insert a file path
+nnoremap <localleader>q :QuickLook<space>
+" Open a preview for the current buffer content
+nnoremap <silent> <localleader><space> <Plug>QuickLook
