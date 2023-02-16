@@ -9,9 +9,9 @@ let s:cmd = exepath(s:path . '/bin/ql')
 if exists('g:ql_command')
   let s:cmd = g:ql_command
 elseif s:cmd != ''
-  let s:cmd = s:cmd
+  let s:cmd = s:cmd . ' --title "$TITLE"'
 elseif executable('ql')
-  let s:cmd = exepath('ql')
+  let s:cmd = exepath('ql') . ' --title "$TITLE"'
 elseif executable('qlmanage')
   let s:cmd = 'qlmanage -p'
 elseif executable('open')
@@ -35,18 +35,33 @@ function! s:compile() abort
 endfunction
 
 function! s:view(...) abort
-  if a:0 == 0
-    let path = tempname() . '.' . expand('%:t')
-    execute 'write ' . (fnameescape(path))
+  let argc = a:0
+
+  if argc == 0
+    let name = expand('%:t')
+    let path = tempname() . '.' . name
+    silent execute 'write ' . fnameescape(path)
   else
     let path = a:1
+    let name = fnamemodify(path, ':t')
   endif
 
   if !filereadable(path)
     throw 'File not found: ' . path
   endif
 
-  call s:exec(s:cmd . ' ' . shellescape(path))
+  if argc > 1
+    let title = a:2
+  else
+    let title = name
+  endif
+
+  let l:cmd = 'export TITLE=' . shellescape(title) . ' && ' . s:cmd
+  call s:exec(l:cmd . ' ' . shellescape(path))
+endfunction
+
+function! ql#view(...) abort
+  return call('s:view', a:000)
 endfunction
 
 nnoremap <silent> <Plug>QuickLookCompile :call <SID>compile()<CR>
