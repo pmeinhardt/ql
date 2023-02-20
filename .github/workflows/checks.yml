@@ -15,3 +15,16 @@ jobs:
         run: make
       - name: Run
         run: test -x bin/ql && (bin/ql || true)
+  vint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install vim-vint
+      - name: Run vint
+        run: vint .
