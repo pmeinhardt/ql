@@ -8,7 +8,7 @@ let s:cmd = exepath(s:path . '/bin/ql')
 
 if exists('g:ql_command')
   let s:cmd = g:ql_command
-elseif s:cmd != ''
+elseif !empty(s:cmd)
   let s:cmd = s:cmd . ' --title "$TITLE"'
 elseif executable('ql')
   let s:cmd = exepath('ql') . ' --title "$TITLE"'
@@ -37,13 +37,13 @@ endfunction
 function! s:view(...) abort
   let argc = a:0
 
-  if argc == 0
+  if argc > 0
+    let path = a:1
+    let name = fnamemodify(path, ':t')
+  else
     let name = expand('%:t')
     let path = tempname() . '.' . name
     silent execute 'write ' . fnameescape(path)
-  else
-    let path = a:1
-    let name = fnamemodify(path, ':t')
   endif
 
   if !filereadable(path)
