@@ -42,6 +42,11 @@ You can use the plugin, even if you cannot build `ql` itself. If the `ql` binary
 
 It is probably possible to integrate other file previewers like [GNOME sushi](https://gitlab.gnome.org/GNOME/sushi). If you are up for it, I am happy about pull-requests.
 
+## Markdown 🚲
+
+If you want to preview Markdown files without additional Quick Look plugins, take a look at Maxdown:
+https://github.com/pmeinhardt/maxdown
+
 ## References
 
 - https://developer.apple.com/documentation/quicklook
