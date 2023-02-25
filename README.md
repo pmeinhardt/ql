@@ -2,6 +2,10 @@
 
 [![checks](https://github.com/pmeinhardt/ql/actions/workflows/checks.yml/badge.svg)](https://github.com/pmeinhardt/ql/actions/workflows/checks.yml)
 
+| Allows you to preview files from the command-line | Integrates with Vim/Neovim         |
+| ------------------------------------------------- | ---------------------------------- |
+| ![](./media/screenshot-macos.png)                 | ![](./media/screenshot-neovim.png) |
+
 Preview files from the command-line using macOS Quick Look.
 
 Open a file in Quick Look from the command-line:
