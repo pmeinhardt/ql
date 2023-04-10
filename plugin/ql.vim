@@ -16,6 +16,8 @@ elseif executable('qlmanage')
   let s:cmd = 'qlmanage -p'
 elseif executable('open')
   let s:cmd = 'open'
+elseif executable('xdg-open')
+  let s:cmd = 'xdg-open'
 endif
 
 function! s:exec(cmd, ...)
