@@ -21,12 +21,12 @@ Yes, there is `qlmanage`. But you’d always have `[DEBUG]` staring at you.
 In order to build the `ql` command, run:
 
 ```shell
-make
+swift build --configuration release
 ```
 
-This requires macOS 12.0+ with `swiftc` installed.
+This requires macOS 12.0+ with `swift` installed.
 
-You can copy the resulting binary anywhere you like or add the `bin/` directory to your `PATH`.
+You can copy the resulting binary anywhere you like or add the `.build/release` directory to your `PATH`.
 
 ## Vim plugin 🔩
 
