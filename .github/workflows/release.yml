@@ -9,6 +9,11 @@ jobs:
   build:
     runs-on: macos-latest
 
+    permissions:
+      attestations: write
+      contents: write
+      id-token: write
+
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
@@ -20,6 +25,12 @@ jobs:
 
       - name: Build a universal binary
         run: swift build --configuration release --arch arm64 --arch x86_64
+
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: .build/apple/Products/Release/ql
+
 
       - name: Create a release
         run: gh release create ${{ github.ref_name }} --generate-notes
