@@ -1,0 +1,32 @@
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v2
+
+      - name: Set up Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: '6.0'
+
+      - name: Build a universal binary
+        run: swift build --configuration release --arch arm64 --arch x86_64
+
+      - name: Create a release
+        run: gh release create ${{ github.ref_name }} --generate-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload the built binary
+        run: gh release upload ${{ github.ref_name }} .build/apple/Products/Release/ql
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
