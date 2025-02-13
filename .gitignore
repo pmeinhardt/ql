@@ -1,5 +1,5 @@
 # Build artefacts
-bin/
+.build/
 
 # General
 .DS_Store
