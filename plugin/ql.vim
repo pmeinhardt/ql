@@ -4,11 +4,11 @@ endif
 let g:loaded_ql = 1
 
 let s:path = fnamemodify(fnamemodify(resolve(expand('<sfile>:p')), ':h'), ':h')
-let s:cmd = exepath(s:path . '/.build/release/ql')
+let s:cmd = resolve(s:path . '/.build/release/ql')
 
 if exists('g:ql_command')
   let s:cmd = g:ql_command
-elseif !empty(s:cmd)
+elseif executable(s:cmd)
   let s:cmd = s:cmd . ' --title "$TITLE"'
 elseif executable('ql')
   let s:cmd = exepath('ql') . ' --title "$TITLE"'
