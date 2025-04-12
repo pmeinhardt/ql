@@ -16,6 +16,22 @@ ql <path/to/file>
 
 Yes, there is `qlmanage`. But you’d always have `[DEBUG]` staring at you.
 
+## Installing 📦
+
+You can install `ql` via Homebrew:
+
+```shell
+brew install --HEAD pmeinhardt/tools/ql
+```
+
+This will build the tool from source.
+
+To update, use:
+
+```shell
+brew upgrade --fetch-HEAD pmeinhardt/tools/ql
+```
+
 ## Building 🪛
 
 In order to build the `ql` command, run:
