@@ -10,20 +10,24 @@ jobs:
   build:
     runs-on: macos-latest
 
+    env:
+      SWIFT_BUILD_FLAGS: --configuration release --arch arm64 --arch x86_64 --build-system swiftbuild
+
     steps:
       - name: Check out the repository
         uses: actions/checkout@v4
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: '6.0'
-
       - name: Build a universal binary
-        run: swift build --configuration release --arch arm64 --arch x86_64
+        run: swift build $SWIFT_BUILD_FLAGS
+
+      - name: Locate the binary
+        run: echo "BIN=$(swift build $SWIFT_BUILD_FLAGS --show-bin-path)/ql" >> "$GITHUB_ENV"
+
+      - name: Check the architectures
+        run: test "$(lipo -archs "$BIN")" = "x86_64 arm64"
 
       - name: Perform a test run
-        run: 'export BIN=.build/apple/Products/Release/ql && test -x $BIN && test "$($BIN)" = "Usage: ql [--title <title>] <path>"'
+        run: 'test -x "$BIN" && test "$("$BIN")" = "Usage: ql [--title <title>] <path>"'
 
   vint:
     runs-on: ubuntu-latest

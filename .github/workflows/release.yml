@@ -14,22 +14,23 @@ jobs:
       contents: write
       id-token: write
 
+    env:
+      SWIFT_BUILD_FLAGS: --configuration release --arch arm64 --arch x86_64 --build-system swiftbuild
+
     steps:
       - name: Check out the repository
         uses: actions/checkout@v2
 
-      - name: Set up Swift
-        uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: '6.0'
-
       - name: Build a universal binary
-        run: swift build --configuration release --arch arm64 --arch x86_64
+        run: swift build $SWIFT_BUILD_FLAGS
+
+      - name: Locate the binary
+        run: echo "BIN=$(swift build $SWIFT_BUILD_FLAGS --show-bin-path)/ql" >> "$GITHUB_ENV"
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2
         with:
-          subject-path: .build/apple/Products/Release/ql
+          subject-path: ${{ env.BIN }}
 
 
       - name: Create a release
@@ -38,6 +39,6 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload the built binary
-        run: gh release upload ${{ github.ref_name }} .build/apple/Products/Release/ql
+        run: gh release upload ${{ github.ref_name }} "$BIN"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
