@@ -42,7 +42,11 @@ swift build --configuration release
 
 This requires macOS 12.0+ with `swift` installed.
 
-You can copy the resulting binary anywhere you like or add the `.build/release` directory to your `PATH`.
+You can copy the resulting binary anywhere you like or add its directory to your `PATH`. To print the directory, run:
+
+```shell
+swift build --configuration release --show-bin-path
+```
 
 ## Vim plugin 🔩
 
